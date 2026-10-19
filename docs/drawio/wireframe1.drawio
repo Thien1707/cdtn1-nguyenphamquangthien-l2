@@ -1,0 +1,124 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Trang-1" id="VoxTkzYGkTs4RybyHEWL">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-24" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="440" width="680" x="74" as="geometry" />
+        </mxCell>
+        <mxCell id="B1wyT4nCjZ34Asju_b9x-1" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="410" width="680" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-2" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="60" width="680" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-3" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="50" width="90" x="10" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-4" edge="1" parent="NA7TXYv0Fp5rffc_Pwge-24" source="NA7TXYv0Fp5rffc_Pwge-3" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=1;exitDx=0;exitDy=0;" target="NA7TXYv0Fp5rffc_Pwge-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="300" y="210" as="sourcePoint" />
+            <mxPoint x="350" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-5" edge="1" parent="NA7TXYv0Fp5rffc_Pwge-24" source="NA7TXYv0Fp5rffc_Pwge-3" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="NA7TXYv0Fp5rffc_Pwge-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="300" y="210" as="sourcePoint" />
+            <mxPoint x="350" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-6" parent="NA7TXYv0Fp5rffc_Pwge-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Màn hình 1: Tra cứu và tiếp nhận" vertex="1">
+          <mxGeometry height="30" width="190" x="239" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-7" parent="NA7TXYv0Fp5rffc_Pwge-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Mekong&lt;div&gt;Mobile&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="110" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-8" parent="NA7TXYv0Fp5rffc_Pwge-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;PHÂN HỆ TIẾP NHẬN BẢO HÀNH&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="234" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-9" parent="NA7TXYv0Fp5rffc_Pwge-24" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Nhân viên: Quang Thiện" vertex="1">
+          <mxGeometry height="30" width="72" x="580" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-12" connectable="0" parent="NA7TXYv0Fp5rffc_Pwge-24" style="group" value="" vertex="1">
+          <mxGeometry height="50" width="540" x="70" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-18" connectable="0" parent="NA7TXYv0Fp5rffc_Pwge-12" style="group" value="" vertex="1">
+          <mxGeometry height="40" width="374" x="-10" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-15" connectable="0" parent="NA7TXYv0Fp5rffc_Pwge-18" style="group" value="" vertex="1">
+          <mxGeometry height="40" width="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-13" parent="NA7TXYv0Fp5rffc_Pwge-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Số điện thoại (*):" vertex="1">
+          <mxGeometry height="30" width="105" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-11" parent="NA7TXYv0Fp5rffc_Pwge-15" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="40" width="120" x="120" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-17" parent="NA7TXYv0Fp5rffc_Pwge-18" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Tra cứu" vertex="1">
+          <mxGeometry height="20" width="80" x="294" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-19" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="Họ và tên: Nguyễn Văn An&lt;div&gt;email: an.nv@gmail.com&lt;/div&gt;&lt;div&gt;Địa chỉ: 123 ABC, p. AC, tp.HCM&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="660" x="10" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-25" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="160" width="660" x="10" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-20" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Chọn" vertex="1">
+          <mxGeometry height="30" width="120" x="10" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-21" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Tên thiết bị" vertex="1">
+          <mxGeometry height="30" width="200" x="130" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-22" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Số serial" vertex="1">
+          <mxGeometry height="30" width="120" x="330" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-23" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Trạng thái bảo hành" vertex="1">
+          <mxGeometry height="30" width="220" x="450" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-26" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="120" x="10" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-27" parent="NA7TXYv0Fp5rffc_Pwge-24" style="ellipse;whiteSpace=wrap;html=1;shapeInside=1;aspect=fixed;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="60" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-28" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Iphone 15 Pro Max" vertex="1">
+          <mxGeometry height="30" width="200" x="130" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-29" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="SN12345678" vertex="1">
+          <mxGeometry height="30" width="120" x="330" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-30" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="Còn hạn đến 15/10/2026" vertex="1">
+          <mxGeometry height="30" width="220" x="450" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-31" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="120" x="10" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-32" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="200" x="130" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-33" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="120" x="330" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-35" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="220" x="450" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-36" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="120" x="10" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-37" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="200" x="130" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-38" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="120" x="330" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="NA7TXYv0Fp5rffc_Pwge-39" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="30" width="220" x="450" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="-usHIhODrfPhbTPySMWc-37" parent="NA7TXYv0Fp5rffc_Pwge-24" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Chọn và tạo phiếu bảo hành" vertex="1">
+          <mxGeometry height="20" width="162" x="508" y="410" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

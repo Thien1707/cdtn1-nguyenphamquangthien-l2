@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Trang-1" id="x5aTvWumF0uJH894zTFs">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" plantUmlData="{&#xa;  &quot;data&quot;: &quot;@startuml\nskinparam defaultFontName \&quot;DejaVu Sans\&quot;\nskinparam componentStyle rectangle\nskinparam handwritten false\n\nnote \&quot;CHÚ THÍCH SƠ ĐỒ:\\n- Mũi tên nét liền: Phụ thuộc một chiều / Lời gọi hàm (từ trên xuống).\\n- Khối chữ nhật: Tên lớp và trách nhiệm tương ứng.\\n- NGOÀI PHẠM VI: Chức năng gửi SMS/Email thông báo cho khách hàng (Mức WON&#39;T).\&quot; as N1\n\npackage \&quot;Kiến trúc Phân lớp (Layered Architecture) - Luồng L2 (Tiếp nhận &amp; Phân loại)\&quot; {\n    \n    component \&quot;1. LỚP TRÌNH BÀY (Presentation Layer)\\n\\n[Trang tiếp nhận]   [Danh sách phiếu]   [Trang phân công]\\n\\nTrách nhiệm: Nhận đầu vào của người dùng, hiển thị kết quả.\\nKHÔNG chứa quy tắc nghiệp vụ, KHÔNG truy vấn dữ liệu trực tiếp.\&quot; as UI\n    \n    component \&quot;2. LỚP NGHIỆP VỤ (Business / Service Layer)\\n\\n- TicketService: Tạo phiếu, kiểm tra quy tắc bắt buộc\\n- ClassifyService: Đề xuất nhóm sự cố và mức ưu tiên\\n- AssignService: Gán kỹ thuật viên theo tay nghề\\n\\nTrách nhiệm: Chứa TOÀN BỘ quy trình và quy tắc nghiệp vụ.\\nKHÔNG biết dữ liệu được lưu bằng công nghệ gì.\&quot; as BLL\n\n    component \&quot;3. LỚP TRUY CẬP DỮ LIỆU (Repository / DAO)\\n\\n- TicketRepository\\n- CustomerRepository\\n- TechnicianRepository\\n\\nTrách nhiệm: Đọc và ghi dữ liệu, che giấu chi tiết công nghệ lưu trữ.\\nKHÔNG chứa quy tắc nghiệp vụ.\&quot; as DAL\n\n    component \&quot;4. LỚP LƯU TRỮ (Data Store)\\n\\nCơ sở dữ liệu (PostgreSQL)\\n\\nTrách nhiệm: Lưu giữ dữ liệu và bảo đảm toàn vẹn ở mức lược đồ\\n(Các bảng: ticket, customer, technician...)\&quot; as DB\n\n    &#39; Mối quan hệ trao đổi\n    UI --&gt; BLL : Giao tiếp qua HTTP + JSON\\n(Hợp đồng API ở docs/api.md)\n    BLL --&gt; DAL : Gọi qua giao diện (Interface) Repository\n    DAL --&gt; DB : Truy vấn SQL\n}\n@enduml&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="nPTC2no94vJM44x9iDPa-1">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=10;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Kiến trúc Phân lớp (Layered Architecture) - Luồng L2 (Tiếp nhận &amp;amp; Phân loại)" plantUmlId="c_0" plantUmlBaseStyle="shape=folder;tabWidth=511;tabHeight=23;tabPosition=left;html=1;whiteSpace=wrap;fillColor=none;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontStyle=0;fontColor=#000000;align=left;verticalAlign=top;spacingLeft=4;spacingTop=-2;fontFamily=DejaVu Sans;" plantUmlBaseValue="Kiến trúc Phân lớp (Layered Architecture) - Luồng L2 (Tiếp nhận &amp;amp; Phân loại)" id="nPTC2no94vJM44x9iDPa-2">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-1" style="shape=folder;tabWidth=511;tabHeight=23;tabPosition=left;html=1;whiteSpace=wrap;fillColor=none;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontStyle=0;fontColor=#000000;align=left;verticalAlign=top;spacingLeft=4;spacingTop=-2;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="778" width="554.16" x="10" y="10" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="1. LỚP TRÌNH BÀY (Presentation Layer)&#xa;&#xa;[Trang tiếp nhận]   [Danh sách phiếu]   [Trang phân công]&#xa;&#xa;Trách nhiệm: Nhận đầu vào của người dùng, hiển thị kết quả.&#xa;KHÔNG chứa quy tắc nghiệp vụ, KHÔNG truy vấn dữ liệu trực tiếp." plantUmlId="n_1" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" plantUmlBaseValue="1. LỚP TRÌNH BÀY (Presentation Layer)&#xa;&#xa;[Trang tiếp nhận]   [Danh sách phiếu]   [Trang phân công]&#xa;&#xa;Trách nhiệm: Nhận đầu vào của người dùng, hiển thị kết quả.&#xa;KHÔNG chứa quy tắc nghiệp vụ, KHÔNG truy vấn dữ liệu trực tiếp." id="nPTC2no94vJM44x9iDPa-3">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-2" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="110" width="452" x="50.95" y="34" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="2. LỚP NGHIỆP VỤ (Business / Service Layer)&#xa;&#xa;- TicketService: Tạo phiếu, kiểm tra quy tắc bắt buộc&#xa;- ClassifyService: Đề xuất nhóm sự cố và mức ưu tiên&#xa;- AssignService: Gán kỹ thuật viên theo tay nghề&#xa;&#xa;Trách nhiệm: Chứa TOÀN BỘ quy trình và quy tắc nghiệp vụ.&#xa;KHÔNG biết dữ liệu được lưu bằng công nghệ gì." plantUmlId="n_2" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" plantUmlBaseValue="2. LỚP NGHIỆP VỤ (Business / Service Layer)&#xa;&#xa;- TicketService: Tạo phiếu, kiểm tra quy tắc bắt buộc&#xa;- ClassifyService: Đề xuất nhóm sự cố và mức ưu tiên&#xa;- AssignService: Gán kỹ thuật viên theo tay nghề&#xa;&#xa;Trách nhiệm: Chứa TOÀN BỘ quy trình và quy tắc nghiệp vụ.&#xa;KHÔNG biết dữ liệu được lưu bằng công nghệ gì." id="nPTC2no94vJM44x9iDPa-4">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-2" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="142" width="427" x="63.16" y="220" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="3. LỚP TRUY CẬP DỮ LIỆU (Repository / DAO)&#xa;&#xa;- TicketRepository&#xa;- CustomerRepository&#xa;- TechnicianRepository&#xa;&#xa;Trách nhiệm: Đọc và ghi dữ liệu, che giấu chi tiết công nghệ lưu trữ.&#xa;KHÔNG chứa quy tắc nghiệp vụ." plantUmlId="n_3" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" plantUmlBaseValue="3. LỚP TRUY CẬP DỮ LIỆU (Repository / DAO)&#xa;&#xa;- TicketRepository&#xa;- CustomerRepository&#xa;- TechnicianRepository&#xa;&#xa;Trách nhiệm: Đọc và ghi dữ liệu, che giấu chi tiết công nghệ lưu trữ.&#xa;KHÔNG chứa quy tắc nghiệp vụ." id="nPTC2no94vJM44x9iDPa-5">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-2" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="142" width="481" x="37" y="438" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="4. LỚP LƯU TRỮ (Data Store)&#xa;&#xa;Cơ sở dữ liệu (PostgreSQL)&#xa;&#xa;Trách nhiệm: Lưu giữ dữ liệu và bảo đảm toàn vẹn ở mức lược đồ&#xa;(Các bảng: ticket, customer, technician...)" plantUmlId="n_4" plantUmlBaseStyle="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" plantUmlBaseValue="4. LỚP LƯU TRỮ (Data Store)&#xa;&#xa;Cơ sở dữ liệu (PostgreSQL)&#xa;&#xa;Trách nhiệm: Lưu giữ dữ liệu và bảo đảm toàn vẹn ở mức lược đồ&#xa;(Các bảng: ticket, customer, technician...)" id="nPTC2no94vJM44x9iDPa-6">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-2" style="rounded=1;absoluteArcSize=1;arcSize=6;fillColor=#F1F1F1;strokeColor=#181818;fontSize=14;whiteSpace=wrap;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="110" width="460" x="47.42" y="656" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Giao tiếp qua HTTP + JSON&#xa;(Hợp đồng API ở docs/api.md)" plantUmlId="e_6" plantUmlBaseStyle="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="Giao tiếp qua HTTP + JSON&#xa;(Hợp đồng API ở docs/api.md)" id="nPTC2no94vJM44x9iDPa-8">
+          <mxCell edge="1" parent="nPTC2no94vJM44x9iDPa-2" source="nPTC2no94vJM44x9iDPa-3" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="nPTC2no94vJM44x9iDPa-4">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint x="100" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Gọi qua giao diện (Interface) Repository" plantUmlId="e_7" plantUmlBaseStyle="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="Gọi qua giao diện (Interface) Repository" id="nPTC2no94vJM44x9iDPa-9">
+          <mxCell edge="1" parent="nPTC2no94vJM44x9iDPa-2" source="nPTC2no94vJM44x9iDPa-4" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="nPTC2no94vJM44x9iDPa-5">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint x="134" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Truy vấn SQL" plantUmlId="e_8" plantUmlBaseStyle="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" plantUmlBaseValue="Truy vấn SQL" id="nPTC2no94vJM44x9iDPa-10">
+          <mxCell edge="1" parent="nPTC2no94vJM44x9iDPa-2" source="nPTC2no94vJM44x9iDPa-5" style="strokeColor=#181818;fontColor=#000000;fontSize=12;html=1;labelBackgroundColor=#FFFFFF;endArrow=classicThin;endFill=1;fontFamily=DejaVu Sans;curved=0;rounded=0;endSize=6;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" target="nPTC2no94vJM44x9iDPa-6">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint x="48" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="CHÚ THÍCH SƠ ĐỒ:&#xa;- Mũi tên nét liền: Phụ thuộc một chiều / Lời gọi hàm (từ trên xuống).&#xa;- Khối chữ nhật: Tên lớp và trách nhiệm tương ứng.&#xa;- NGOÀI PHẠM VI: Chức năng gửi SMS/Email thông báo cho khách hàng (Mức WON&#39;T)." plantUmlId="note_5" plantUmlBaseStyle="shape=note;size=14;fillColor=#FEFFDD;strokeColor=#181818;fontSize=12;whiteSpace=wrap;align=left;fontFamily=DejaVu Sans;" plantUmlBaseValue="CHÚ THÍCH SƠ ĐỒ:&#xa;- Mũi tên nét liền: Phụ thuộc một chiều / Lời gọi hàm (từ trên xuống).&#xa;- Khối chữ nhật: Tên lớp và trách nhiệm tương ứng.&#xa;- NGOÀI PHẠM VI: Chức năng gửi SMS/Email thông báo cho khách hàng (Mức WON&#39;T)." id="nPTC2no94vJM44x9iDPa-7">
+          <mxCell parent="nPTC2no94vJM44x9iDPa-1" style="shape=note;size=14;fillColor=#FEFFDD;strokeColor=#181818;fontSize=12;whiteSpace=wrap;align=left;fontFamily=DejaVu Sans;" vertex="1">
+            <mxGeometry height="81" width="489" x="599.16" y="358.5" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
