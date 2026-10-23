@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#183d36">
+    <title>Mekong Mobile | Bảo hành</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+</head>
+<body>
+    <main class="shell">
+        <section id="login-view" class="login-layout">
+            <div class="brand-panel">
+                <p class="eyebrow">MEKONG MOBILE · SERVICE DESK</p>
+                <h1>Tiếp nhận<br>và bảo hành</h1>
+                <p class="brand-copy">Quản lý yêu cầu, tiến độ sửa chữa và cam kết SLA trong một nơi.</p>
+                <div class="brand-meta"><span class="status-dot"></span> Hệ thống tiếp nhận</div>
+            </div>
+            <form id="login-form" class="login-form">
+                <div>
+                    <p class="eyebrow">ĐĂNG NHẬP</p>
+                    <h2>Chào bạn</h2>
+                </div>
+                <label>Tên đăng nhập<input name="username" autocomplete="username" required></label>
+                <label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required></label>
+                <button class="button primary" type="submit">Đăng nhập <span aria-hidden="true">→</span></button>
+                <p class="hint">Sử dụng tài khoản được quản trị viên cấp.</p>
+                <p id="login-error" class="error" role="alert"></p>
+            </form>
+        </section>
+
+        <section id="app-view" hidden>
+            <header class="topbar">
+                <a class="wordmark" href="/" aria-label="Mekong Mobile">MM<span>.</span></a>
+                <div class="top-title"><span class="eyebrow">SERVICE OPERATIONS</span><strong>Bảo hành & sửa chữa</strong></div>
+                <div class="account"><span id="user-label"></span><button id="logout" class="icon-button" type="button" title="Đăng xuất" aria-label="Đăng xuất">↗</button></div>
+            </header>
+            <nav id="tabs" class="tabs" aria-label="Khu vực nghiệp vụ"></nav>
+            <section id="workspace" class="workspace"></section>
+            <div id="toast" class="toast" role="status" aria-live="polite"></div>
+        </section>
+    </main>
+</body>
+</html>
