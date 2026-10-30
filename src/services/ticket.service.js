@@ -9,11 +9,13 @@ const SLA_HOURS = {
 
 const BUSINESS_TIME = {
     offsetMinutes: Number(process.env.BUSINESS_TIMEZONE_OFFSET_MINUTES || 420),
-    startHour: Number(process.env.BUSINESS_START_HOUR || 9),
+    startHour: Number(process.env.BUSINESS_START_HOUR || 8),
     endHour: Number(process.env.BUSINESS_END_HOUR || 17),
-    workingDays: (process.env.BUSINESS_WORKING_DAYS || '1,2,3,4,5').split(',').map(Number),
+    workingDays: (process.env.BUSINESS_WORKING_DAYS || '1,2,3,4,5,6').split(',').map(Number),
     holidays: new Set((process.env.BUSINESS_HOLIDAYS || '').split(',').filter(Boolean))
 };
+
+const MIN_ISSUE_DESC_LENGTH = 10;
 
 const REQUIRED_FIELDS = ['customer_id', 'device_id', 'center_id'];
 const STATUS_TRANSITIONS = {
@@ -39,6 +41,21 @@ function invalid(message) {
     const error = new Error(`DU_LIEU_KHONG_HOP_LE: ${message}`);
     error.statusCode = 400;
     return error;
+}
+
+function validatePhone(phone) {
+    if (typeof phone !== 'string' || !/^\d{10}$/.test(phone)) {
+        throw invalid('Số điện thoại phải bao gồm đúng 10 chữ số');
+    }
+}
+
+function validateIssueDesc(issueDesc) {
+    if (typeof issueDesc !== 'string' || issueDesc.trim() === '') {
+        throw invalid('Mô tả lỗi không được để trống');
+    }
+    if (issueDesc.trim().length < MIN_ISSUE_DESC_LENGTH) {
+        throw invalid(`Mô tả lỗi phải có tối thiểu ${MIN_ISSUE_DESC_LENGTH} ký tự`);
+    }
 }
 
 function notFound(message) {
@@ -109,9 +126,7 @@ class TicketService {
     }
 
     async searchCustomer(phone) {
-        if (typeof phone !== 'string' || !/^\d{10}$/.test(phone)) {
-            throw invalid('Số điện thoại phải bao gồm đúng 10 chữ số');
-        }
+        validatePhone(phone);
         const customer = await ticketRepository.findCustomerByPhone(phone);
         if (!customer) {
             const error = notFound('Không tìm thấy thông tin khách hàng với số điện thoại này.');
@@ -121,10 +136,71 @@ class TicketService {
         return customer;
     }
 
-    async createCustomer(data) {
-        if (typeof data.phone !== 'string' || !/^\d{10}$/.test(data.phone)) {
-            throw invalid('Số điện thoại phải bao gồm đúng 10 chữ số');
+    async getCustomerById(customerId) {
+        const customer = await ticketRepository.findCustomerById(customerId);
+        if (!customer) {
+            throw notFound('Không tìm thấy khách hàng.');
         }
+        return customer;
+    }
+
+    async listCustomers() {
+        return ticketRepository.listCustomers();
+    }
+
+    async updateCustomer(customerId, data) {
+        const customer = await ticketRepository.findCustomerById(customerId);
+        if (!customer) {
+            throw notFound('Không tìm thấy khách hàng.');
+        }
+        if (data.phone !== undefined) {
+            validatePhone(data.phone);
+            if (data.phone !== customer.phone) {
+                const existing = await ticketRepository.findCustomerByPhone(data.phone);
+                if (existing) {
+                    const error = invalid('Số điện thoại đã được đăng ký');
+                    error.statusCode = 409;
+                    throw error;
+                }
+            }
+        }
+        if (data.full_name !== undefined && !String(data.full_name).trim()) {
+            throw invalid('Họ và tên không được để trống');
+        }
+        if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+            throw invalid('Email không đúng định dạng');
+        }
+        return ticketRepository.updateCustomer(customerId, {
+            full_name: data.full_name?.trim() ?? customer.full_name,
+            phone: data.phone ?? customer.phone,
+            email: data.email !== undefined ? (data.email?.trim() || null) : customer.email,
+            address: data.address !== undefined ? (data.address?.trim() || null) : customer.address
+        });
+    }
+
+    async deleteCustomer(customerId) {
+        const customer = await ticketRepository.findCustomerById(customerId);
+        if (!customer) {
+            throw notFound('Không tìm thấy khách hàng.');
+        }
+        const ticketCount = await ticketRepository.countTicketsByCustomerId(customerId);
+        if (ticketCount > 0) {
+            const error = invalid('Không thể xóa khách hàng đã có phiếu bảo hành');
+            error.statusCode = 409;
+            throw error;
+        }
+        const deviceCount = await ticketRepository.countDevicesByCustomerId(customerId);
+        if (deviceCount > 0) {
+            const error = invalid('Không thể xóa khách hàng còn thiết bị trong hồ sơ');
+            error.statusCode = 409;
+            throw error;
+        }
+        await ticketRepository.deleteCustomer(customerId);
+        return { customer_id: Number(customerId) };
+    }
+
+    async createCustomer(data) {
+        validatePhone(data.phone);
         if (typeof data.full_name !== 'string' || !data.full_name.trim()) {
             throw invalid('Họ và tên không được để trống');
         }
@@ -145,12 +221,67 @@ class TicketService {
         });
     }
 
+    async getDeviceById(deviceId) {
+        const device = await ticketRepository.findDeviceById(deviceId);
+        if (!device) {
+            throw notFound('Không tìm thấy thiết bị.');
+        }
+        return device;
+    }
+
+    async listDevicesByCustomer(customerId) {
+        const customer = await ticketRepository.findCustomerById(customerId);
+        if (!customer) {
+            throw notFound('Không tìm thấy khách hàng.');
+        }
+        return ticketRepository.listDevicesByCustomer(customerId);
+    }
+
+    async updateDevice(deviceId, data) {
+        const device = await ticketRepository.findDeviceById(deviceId);
+        if (!device) {
+            throw notFound('Không tìm thấy thiết bị.');
+        }
+        if (data.serial_no !== undefined && !String(data.serial_no).trim()) {
+            throw invalid('Số serial là bắt buộc');
+        }
+        if (data.product_name !== undefined && !String(data.product_name).trim()) {
+            throw invalid('Tên thiết bị là bắt buộc');
+        }
+        if (data.customer_id !== undefined && String(data.customer_id) !== String(device.customer_id)) {
+            throw invalid('Thiết bị phải thuộc đúng khách hàng');
+        }
+        return ticketRepository.updateDevice(deviceId, {
+            serial_no: data.serial_no?.trim() ?? device.serial_no,
+            product_name: data.product_name?.trim() ?? device.product_name,
+            purchase_date: data.purchase_date !== undefined ? data.purchase_date : device.purchase_date,
+            warranty_months: data.warranty_months !== undefined ? Number(data.warranty_months) : device.warranty_months
+        });
+    }
+
+    async deleteDevice(deviceId) {
+        const device = await ticketRepository.findDeviceById(deviceId);
+        if (!device) {
+            throw notFound('Không tìm thấy thiết bị.');
+        }
+        const ticketCount = await ticketRepository.countTicketsByDeviceId(deviceId);
+        if (ticketCount > 0) {
+            const error = invalid('Không thể xóa thiết bị đã phát sinh phiếu bảo hành');
+            error.statusCode = 409;
+            throw error;
+        }
+        await ticketRepository.deleteDevice(deviceId);
+        return { device_id: Number(deviceId) };
+    }
+
     async createDevice(data) {
         if (!data.customer_id || typeof data.serial_no !== 'string' || !data.serial_no.trim() ||
             typeof data.product_name !== 'string' || !data.product_name.trim()) {
             throw invalid('Khách hàng, tên thiết bị và số serial là bắt buộc');
         }
-        const customer = await ticketRepository.findCustomerByPhone(data.phone);
+        const customer = data.phone
+            ? await ticketRepository.findCustomerByPhone(data.phone)
+            : await ticketRepository.findCustomerById(data.customer_id);
         if (!customer || String(customer.customer_id) !== String(data.customer_id)) {
             throw invalid('Khách hàng không hợp lệ');
         }
@@ -164,9 +295,7 @@ class TicketService {
     }
 
     suggestCategory(issueDesc) {
-        if (typeof issueDesc !== 'string' || issueDesc.trim() === '') {
-            throw invalid('Mô tả lỗi không được để trống');
-        }
+        validateIssueDesc(issueDesc);
         const normalized = normalizeText(issueDesc);
         const match = CATEGORY_KEYWORDS.find(({ keywords }) =>
             keywords.some((keyword) => normalized.includes(normalizeText(keyword)))
@@ -181,12 +310,15 @@ class TicketService {
             }
         }
 
-        if (typeof data.issue_desc !== 'string' || data.issue_desc.trim() === '') {
-            throw new Error('DU_LIEU_KHONG_HOP_LE: Mô tả lỗi không được để trống');
-        }
+        validateIssueDesc(data.issue_desc);
 
         if (!Object.hasOwn(SLA_HOURS, data.priority)) {
             throw invalid('Mức ưu tiên không hợp lệ');
+        }
+
+        const device = await ticketRepository.findDeviceById(data.device_id);
+        if (!device || String(device.customer_id) !== String(data.customer_id)) {
+            throw invalid('Thiết bị không thuộc khách hàng đã chọn');
         }
 
         const createdAt = new Date();

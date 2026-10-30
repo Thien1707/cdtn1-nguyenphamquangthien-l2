@@ -34,10 +34,14 @@ test('calculates SLA from priority', async () => {
     }
 });
 
-test('adds business hours across closing time and weekends', () => {
+test('adds business hours across closing time and saturday', () => {
     const deadline = ticketService.addBusinessHours('2026-10-23T07:00:00.000Z', 4);
+    assert.equal(deadline.toISOString(), '2026-10-24T02:00:00.000Z');
+});
 
-    assert.equal(deadline.toISOString(), '2026-10-26T03:00:00.000Z');
+test('skips sunday when counting business hours', () => {
+    const deadline = ticketService.addBusinessHours('2026-10-24T09:00:00.000Z', 8);
+    assert.equal(deadline.toISOString(), '2026-10-26T08:00:00.000Z');
 });
 
 test('skips configured business holidays', () => {
@@ -60,6 +64,10 @@ test('rejects missing required fields, empty description, and invalid priority',
     await assert.rejects(
         ticketService.createTicket({ ...validTicket, issue_desc: '   ' }),
         /Mô tả lỗi không được để trống/
+    );
+    await assert.rejects(
+        ticketService.createTicket({ ...validTicket, issue_desc: '123456789' }),
+        /tối thiểu 10 ký tự/
     );
     await assert.rejects(
         ticketService.createTicket({ ...validTicket, priority: 'KHAN_CAP' }),

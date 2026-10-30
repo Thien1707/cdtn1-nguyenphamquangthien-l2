@@ -71,8 +71,8 @@ class TicketRepository {
         };
     }
 
-    async findCustomerByPhone(phone) {
-        const customer = customers.find((item) => item.phone === phone);
+    async findCustomerById(customerId) {
+        const customer = customers.find((item) => item.customer_id === Number(customerId));
         if (!customer) {
             return null;
         }
@@ -80,6 +80,77 @@ class TicketRepository {
             ...customer,
             devices: devices.filter((device) => device.customer_id === customer.customer_id)
         };
+    }
+
+    async listCustomers() {
+        return customers.map((customer) => ({
+            ...customer,
+            devices: devices.filter((device) => device.customer_id === customer.customer_id)
+        }));
+    }
+
+    async updateCustomer(customerId, data) {
+        const index = customers.findIndex((item) => item.customer_id === Number(customerId));
+        if (index === -1) {
+            return null;
+        }
+        customers[index] = { ...customers[index], ...data };
+        return this.findCustomerById(customerId);
+    }
+
+    async deleteCustomer(customerId) {
+        const index = customers.findIndex((item) => item.customer_id === Number(customerId));
+        if (index === -1) {
+            return false;
+        }
+        customers.splice(index, 1);
+        return true;
+    }
+
+    async countTicketsByCustomerId(customerId) {
+        return tickets.filter((ticket) => ticket.customer_id === Number(customerId)).length;
+    }
+
+    async countDevicesByCustomerId(customerId) {
+        return devices.filter((device) => device.customer_id === Number(customerId)).length;
+    }
+
+    async findCustomerByPhone(phone) {
+        const customer = customers.find((item) => item.phone === phone);
+        if (!customer) {
+            return null;
+        }
+        return this.findCustomerById(customer.customer_id);
+    }
+
+    async findDeviceById(deviceId) {
+        return devices.find((item) => item.device_id === Number(deviceId)) || null;
+    }
+
+    async listDevicesByCustomer(customerId) {
+        return devices.filter((device) => device.customer_id === Number(customerId));
+    }
+
+    async updateDevice(deviceId, data) {
+        const index = devices.findIndex((item) => item.device_id === Number(deviceId));
+        if (index === -1) {
+            return null;
+        }
+        devices[index] = { ...devices[index], ...data };
+        return devices[index];
+    }
+
+    async deleteDevice(deviceId) {
+        const index = devices.findIndex((item) => item.device_id === Number(deviceId));
+        if (index === -1) {
+            return false;
+        }
+        devices.splice(index, 1);
+        return true;
+    }
+
+    async countTicketsByDeviceId(deviceId) {
+        return tickets.filter((ticket) => ticket.device_id === Number(deviceId)).length;
     }
 
     async createCustomer(data) {
@@ -179,6 +250,15 @@ class TicketRepository {
             ticket_code: `${prefix}${String(nextSequence).padStart(3, '0')}`
         };
         tickets.push(newTicket);
+        ticketStatusLogs.push({
+            log_id: ticketStatusLogs.length + 1,
+            ticket_id: newTicket.ticket_id,
+            from_status: null,
+            to_status: 'MOI',
+            reason: 'Tiếp nhận phiếu mới',
+            changed_by: null,
+            changed_at: data.created_at
+        });
         return newTicket;
     }
 }

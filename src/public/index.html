@@ -6,6 +6,8 @@
     <meta name="theme-color" content="#183d36">
     <title>Mekong Mobile | Bảo hành</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="/api/client.js" defer></script>
+    <script src="/ui-state.js" defer></script>
     <script src="/app.js" defer></script>
 </head>
 <body>
@@ -25,7 +27,7 @@
                 <label>Tên đăng nhập<input name="username" autocomplete="username" required></label>
                 <label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required></label>
                 <button class="button primary" type="submit">Đăng nhập <span aria-hidden="true">→</span></button>
-                <p class="hint">Sử dụng tài khoản được quản trị viên cấp.</p>
+                <p class="hint">Demo (STORAGE_DRIVER=memory): <code>frontdesk</code> / <code>Welcome123!</code> — PostgreSQL: dùng tài khoản đã tạo bằng <code>npm run user:create</code>.</p>
                 <p id="login-error" class="error" role="alert"></p>
             </form>
         </section>

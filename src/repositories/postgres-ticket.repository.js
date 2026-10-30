@@ -21,6 +21,92 @@ class PostgresTicketRepository {
         return rows;
     }
 
+    async findCustomerById(customerId) {
+        const { rows } = await pool.query(`
+            SELECT c.customer_id, c.full_name, c.phone, c.email, c.address,
+                   COALESCE(json_agg(json_build_object(
+                       'device_id', d.device_id, 'serial_no', d.serial_no,
+                       'product_name', d.product_name, 'purchase_date', d.purchase_date,
+                       'warranty_months', d.warranty_months
+                   )) FILTER (WHERE d.device_id IS NOT NULL), '[]'::json) AS devices
+            FROM customers c LEFT JOIN devices d USING (customer_id)
+            WHERE c.customer_id = $1 GROUP BY c.customer_id`, [customerId]);
+        return rows[0] || null;
+    }
+
+    async listCustomers() {
+        const { rows } = await pool.query(`
+            SELECT c.customer_id, c.full_name, c.phone, c.email, c.address,
+                   COALESCE(json_agg(json_build_object(
+                       'device_id', d.device_id, 'serial_no', d.serial_no,
+                       'product_name', d.product_name, 'purchase_date', d.purchase_date,
+                       'warranty_months', d.warranty_months
+                   )) FILTER (WHERE d.device_id IS NOT NULL), '[]'::json) AS devices
+            FROM customers c LEFT JOIN devices d USING (customer_id)
+            GROUP BY c.customer_id ORDER BY c.customer_id`);
+        return rows;
+    }
+
+    async updateCustomer(customerId, data) {
+        const { rows } = await pool.query(`
+            UPDATE customers SET full_name = $1, phone = $2, email = $3, address = $4
+            WHERE customer_id = $5
+            RETURNING customer_id, full_name, phone, email, address`,
+        [data.full_name, data.phone, data.email, data.address, customerId]);
+        if (!rows[0]) {
+            return null;
+        }
+        return this.findCustomerById(customerId);
+    }
+
+    async deleteCustomer(customerId) {
+        const { rowCount } = await pool.query('DELETE FROM customers WHERE customer_id = $1', [customerId]);
+        return rowCount > 0;
+    }
+
+    async countTicketsByCustomerId(customerId) {
+        const { rows } = await pool.query('SELECT COUNT(*)::int AS total FROM tickets WHERE customer_id = $1', [customerId]);
+        return rows[0].total;
+    }
+
+    async countDevicesByCustomerId(customerId) {
+        const { rows } = await pool.query('SELECT COUNT(*)::int AS total FROM devices WHERE customer_id = $1', [customerId]);
+        return rows[0].total;
+    }
+
+    async findDeviceById(deviceId) {
+        const { rows } = await pool.query(`
+            SELECT device_id, customer_id, serial_no, product_name, purchase_date, warranty_months
+            FROM devices WHERE device_id = $1`, [deviceId]);
+        return rows[0] || null;
+    }
+
+    async listDevicesByCustomer(customerId) {
+        const { rows } = await pool.query(`
+            SELECT device_id, customer_id, serial_no, product_name, purchase_date, warranty_months
+            FROM devices WHERE customer_id = $1 ORDER BY device_id`, [customerId]);
+        return rows;
+    }
+
+    async updateDevice(deviceId, data) {
+        const { rows } = await pool.query(`
+            UPDATE devices SET serial_no = $1, product_name = $2, purchase_date = $3, warranty_months = $4
+            WHERE device_id = $5
+            RETURNING device_id, customer_id, serial_no, product_name, purchase_date, warranty_months`,
+        [data.serial_no, data.product_name, data.purchase_date, data.warranty_months, deviceId]);
+        return rows[0] || null;
+    }
+
+    async deleteDevice(deviceId) {
+        const { rowCount } = await pool.query('DELETE FROM devices WHERE device_id = $1', [deviceId]);
+        return rowCount > 0;
+    }
+
+    async countTicketsByDeviceId(deviceId) {
+        const { rows } = await pool.query('SELECT COUNT(*)::int AS total FROM tickets WHERE device_id = $1', [deviceId]);
+        return rows[0].total;
+    }
+
     async findCustomerByPhone(phone) {
         const { rows } = await pool.query(`
             SELECT c.customer_id, c.full_name, c.phone, c.email, c.address,
@@ -144,6 +230,10 @@ class PostgresTicketRepository {
                 RETURNING ${TICKET_RETURNING_COLUMNS}`,
             [ticketCode, data.customer_id, data.device_id, data.center_id, data.issue_desc,
                 data.issue_category, data.priority, data.status, data.created_at, data.sla_deadline]);
+            await client.query(`
+                INSERT INTO ticket_status_logs (ticket_id, from_status, to_status, reason, changed_by, changed_at)
+                VALUES ($1, NULL, 'MOI', 'Tiếp nhận phiếu mới', NULL, $2)`,
+            [rows[0].ticket_id, data.created_at]);
             await client.query('COMMIT');
             return rows[0];
         } catch (error) {
@@ -167,14 +257,6 @@ class PostgresTicketRepository {
             INSERT INTO users (username, password_hash, role, technician_id)
             VALUES ($1, $2, $3, $4)
             RETURNING user_id, username, role, technician_id`,
-        [data.username, data.password_hash, data.role, data.technician_id]);
-        return rows[0];
-    }
-
-    async createUser(data) {
-        const { rows } = await pool.query(`
-            INSERT INTO users (username, password_hash, role, technician_id)
-            VALUES ($1, $2, $3, $4) RETURNING user_id, username, role, technician_id`,
         [data.username, data.password_hash, data.role, data.technician_id]);
         return rows[0];
     }

@@ -11,13 +11,11 @@ exports.getTickets = async (req, res) => {
 
 exports.createTicket = async (req, res) => {
     try {
-        const newTicket = await
-ticketService.createTicket(req.body);
-        res.status(201).json({ status: 'success', data: newTicket
-        });
-        } catch (err) {
-            res.status(400).json({ status: 'fail', message: err.message });
-        }
+        const newTicket = await ticketService.createTicket(req.body);
+        res.status(201).json({ status: 'success', data: newTicket });
+    } catch (error) {
+        handleError(res, error);
+    }
 };
 
 function handleError(res, error) {
@@ -41,6 +39,46 @@ exports.searchCustomer = async (req, res) => {
     }
 };
 
+exports.listCustomers = async (req, res) => {
+    try {
+        const data = await ticketService.listCustomers();
+        res.json({ status: 'success', data });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+exports.getCustomer = async (req, res) => {
+    try {
+        const data = await ticketService.getCustomerById(req.params.customerId);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+exports.updateCustomer = async (req, res) => {
+    try {
+        const data = await ticketService.updateCustomer(req.params.customerId, req.body);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        if (error.code === '23505') {
+            error.statusCode = 409;
+            error.message = 'DU_LIEU_KHONG_HOP_LE: Số điện thoại đã được đăng ký';
+        }
+        handleError(res, error);
+    }
+};
+
+exports.deleteCustomer = async (req, res) => {
+    try {
+        const data = await ticketService.deleteCustomer(req.params.customerId);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
 exports.createCustomer = async (req, res) => {
     try {
         const data = await ticketService.createCustomer(req.body);
@@ -54,10 +92,54 @@ exports.createCustomer = async (req, res) => {
     }
 };
 
+exports.getDevice = async (req, res) => {
+    try {
+        const data = await ticketService.getDeviceById(req.params.deviceId);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+exports.listDevicesByCustomer = async (req, res) => {
+    try {
+        const data = await ticketService.listDevicesByCustomer(req.params.customerId);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
 exports.createDevice = async (req, res) => {
     try {
         const data = await ticketService.createDevice(req.body);
         res.status(201).json({ status: 'success', data });
+    } catch (error) {
+        if (error.code === '23505') {
+            error.statusCode = 409;
+            error.message = 'DU_LIEU_KHONG_HOP_LE: Số serial đã tồn tại';
+        }
+        handleError(res, error);
+    }
+};
+
+exports.updateDevice = async (req, res) => {
+    try {
+        const data = await ticketService.updateDevice(req.params.deviceId, req.body);
+        res.json({ status: 'success', data });
+    } catch (error) {
+        if (error.code === '23505') {
+            error.statusCode = 409;
+            error.message = 'DU_LIEU_KHONG_HOP_LE: Số serial đã tồn tại';
+        }
+        handleError(res, error);
+    }
+};
+
+exports.deleteDevice = async (req, res) => {
+    try {
+        const data = await ticketService.deleteDevice(req.params.deviceId);
+        res.json({ status: 'success', data });
     } catch (error) {
         handleError(res, error);
     }

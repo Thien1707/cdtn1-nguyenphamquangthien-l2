@@ -1,18 +1,19 @@
 # Phụ lục Khai báo Sử dụng Công cụ AI
-**Học phần:** Chuyên đề Tốt nghiệp 1 (HK1 2026 – 2027)
-**Họ và tên sinh viên:** Nguyễn Phạm Quang Thiên
-**Mã số sinh viên:** 2374802011250
-**Chuyên ngành (Track):** Kỹ thuật phần mềm (Software Engineering - SE)
-**Luồng nghiệp vụ:** Luồng L2 – Tiếp nhận và phân loại yêu cầu bảo hành
 
-## 1. Bảng Khai báo Công cụ AI đã Sử dụng
-- Công cụ AI: Gemini Notebook / ChatGPT
-- Mục đích sử dụng: Gợi ý cấu trúc tài liệu SRS, hỗ trợ sinh mã cú pháp Mermaid (sơ đồ) và khung lệnh SQL DDL
-- Phần áp dụng trong bài: Mục 1 (SRS), Mục 3 (Kiến trúc) và Mục 4 (ERD)
-- Cách thức kiểm chứng & Điều chỉnh của sinh viên: Đối chiếu trực tiếp với yêu cầu nghiệp vụ case study Mekong Mobile, kiểm tra chuẩn hóa 3NF và tự rà soát theo 11 tiêu chí kiểm chứng của môn học.
+**Học phần:** Chuyên đề Tốt nghiệp 1 (HK1 2026 – 2027)  
+**Sinh viên:** Nguyễn Phạm Quang Thiện — MSSV **2374802011250**  
+**Track:** Software Engineering (SE) · Luồng **L2**
 
-## 2. Cam kết về Tính Chính thực & Trách nhiệm 
-Tôi xác nhận đã đọc, hiểu và chịu trách nhiệm về toàn bộ nội dung nộp. 
-**Sinh viên thực hiện:** Nguyễn Phạm Quang Thiên
-**Mã số sinh viên:** 2374802011250 
-**Ngày hoàn thành:** 19/10/2026
+## 1. Bảng khai báo (BT1 + BT2)
+
+| Công cụ AI | Dùng vào việc gì | Áp dụng ở tệp / phần nào | Em kiểm chứng mã AI thế nào |
+|------------|------------------|---------------------------|------------------------------|
+| Gemini / ChatGPT (BT1) | Gợi ý cấu trúc SRS, Mermaid, khung SQL DDL | `docs/srs.md`, drawio | Đối chiếu case study Mekong Mobile, rà 3NF, GV feedback TD-01–06 |
+| Cursor AI (BT2) | CRUD customer/device, API client, test, tài liệu BT2 | `src/services/ticket.service.js`, `src/public/api/client.js`, `tests/crud.api.test.js`, `docs/architecture-thuc-te.md` | Chạy `npm test` (17 pass); review diff; chạy thử UI/API trên memory mode |
+| Cursor AI (BT2) | Checklist ảnh, rubric, README | `docs/screenshot-checklist.md`, `README.md` | Sinh viên tự clone README và chụp ảnh S01–S12 theo checklist |
+
+## 2. Cam kết
+
+Tôi chịu trách nhiệm về toàn bộ nội dung nộp. Mọi đoạn do AI gợi ý đều được đọc lại, chỉnh và kiểm thử trước khi commit.
+
+**Ngày cập nhật BT2:** 29/10/2026
