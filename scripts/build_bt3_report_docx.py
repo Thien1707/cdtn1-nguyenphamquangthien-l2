@@ -150,7 +150,7 @@ def build_report():
             ["Kiểm tra Compose", "docker compose config --quiet thành công.", "Đạt cấu hình"],
             ["Build/khởi chạy Docker", "Compose build thành công; app và PostgreSQL healthy; /health trả 200.", "Đạt"],
             ["PostgreSQL / chạy lại seed", "PostgreSQL integration pass; db:init chạy hai lần; seed counts giữ nguyên.", "Đạt"],
-            ["Bug Log", "Hai fix cũ có commit kiểm chứng; fix 5xx mới ở worktree chưa commit.", "Chưa đủ 3 commit-linked"],
+            ["Bug Log", "Ba fix có commit liên kết; BUG-03 ở commit d1352d5 local, chưa push.", "Đủ commit; chờ publish"],
             ["Tag nộp", "v1.0 không có trong tag local hoặc remote lúc kiểm tra.", "Chưa hoàn tất"],
             ["Tài liệu SE", "API reference liệt kê 24 endpoint; ví dụ được lấy từ API in-memory.", "Đã soạn"],
         ],
@@ -264,13 +264,13 @@ def build_report():
         [
             ["BUG-01 / Major", "TC-10: KTV có thể nhìn thấy số điện thoại không che.", "Queue response cần mask 4 số giữa trước serialize.", "c3a3dc3; fix trong history; assertion hiện tại pass."],
             ["BUG-02 / Major", "TC-08: chuyển CHO_LINH_KIEN thiếu lý do.", "Thiếu validate reason trước khi ghi status/history.", "116a33f; fix trong history; API assertion hiện tại pass."],
-            ["BUG-03 / Major", "Regression test mới gây lỗi service nội bộ khi GET tickets.", "Catch handler trả nguyên error.message; thêm shared responder cho lỗi 5xx.", "Đã sửa local, test pass; chưa commit/publish nên chưa đạt yêu cầu commit-link."],
+            ["BUG-03 / Major", "Regression test mới gây lỗi service nội bộ khi GET tickets.", "Catch handler trả nguyên error.message; thêm shared responder cho lỗi 5xx.", "d1352d5 local; test pass; GitHub link chờ push."],
         ],
         font_size=8,
     )
     add_paragraph(
         doc,
-        "Một bản nháp trước ghi 20514fd là commit sửa seed; đối chiếu Git cho thấy commit này không chứa seed SQL. Báo cáo đã rút lại khẳng định đó. Hiện chỉ có hai bug đã sửa với commit được kiểm tra; yêu cầu ba bug có commit link chưa đạt."
+        "Một bản nháp trước ghi 20514fd là commit sửa seed; đối chiếu Git cho thấy commit này không chứa seed SQL. Báo cáo đã rút lại khẳng định đó. Ba bug trong Bug Log hiện có commit tham chiếu; commit d1352d5 chứa BUG-03 nhưng chưa được đẩy lên GitHub."
     )
 
     add_heading(doc, "6. Đóng gói và Deployment Guide", 1)
@@ -326,7 +326,7 @@ def build_report():
     for item in [
         "Thực hiện clean-machine clone/start theo tag v1.0, kiểm health và chạy test trong container sau khi tag được tạo.",
         "Tạo/publish tag v1.0 sau khi nội dung được chốt; xác nhận URL public mở được.",
-        "Commit và publish BUG-03 cùng các thay đổi; sửa liên kết commit trong Bug Log. Không tạo commit giả cho bug chưa có.",
+        "Sau khi rà soát, push commit d1352d5 và các thay đổi báo cáo; xác minh liên kết BUG-03 trên GitHub.",
         "Chạy full secret scan và npm audit; cập nhật checklist bằng kết quả.",
         "Chụp ảnh đầu ra thật cho test suite, container healthy và phép thử máy trắng; không tái sử dụng ảnh BT2.",
         "Điền lớp và rà soát toàn bộ nội dung/AI disclosure trước khi ký nộp.",

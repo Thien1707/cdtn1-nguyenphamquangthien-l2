@@ -32,10 +32,10 @@ Only fixes whose source and commit can be checked are counted as completed. A pr
 3. **Reproduction:** Cause the ticket-list service to throw an internal error and request `GET /api/v1/tickets`.
 4. **Root cause:** Error handlers serialized `error.message` without distinguishing expected client errors from unexpected server errors.
 5. **Fix:** Add a shared error responder that preserves client-validation messages but replaces 5xx details with a generic message.
-6. **Commit and verification:** The change is in the current worktree at `src/controllers/error-response.js`; the regression test passed. **No commit has been created or published for this fix yet.**
-7. **Status:** Fixed locally; not yet eligible as a commit-linked Bug Log item.
+6. **Commit and verification:** Commit [`d1352d5`](https://github.com/Thien1707/cdtn1-nguyenphamquangthien-l2/commit/d1352d58e8ba94484a3afb0f5d963c2bed4ffb0e) contains `src/controllers/error-response.js` and the regression test; the test passed in the full host suite. The commit exists locally; its GitHub URL will be available after it is pushed.
+7. **Status:** Resolved in local commit `d1352d5`; not yet published.
 
 ## Items not claimed as resolved
 
 - PostgreSQL seed/migration idempotence has not been run against a database in this environment. Although the current seed uses `ON CONFLICT DO NOTHING`, no execution evidence or verified fix commit is available here.
-- This file currently has two completed commit-linked fixes. The third fix remains uncommitted; the BT3 requirement of three commit-linked bugs is therefore not yet met.
+- All three listed fixes have commit references. BUG-03 is in local commit `d1352d5`; publishing that commit is still required before its GitHub link can be verified.
