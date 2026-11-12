@@ -8,6 +8,11 @@ const ticketRoutes = require('./routes/ticket.routes');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'healthy', uptime: process.uptime(), timestamp: new Date().toISOString() });
+});
+
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1', ticketRoutes);
 

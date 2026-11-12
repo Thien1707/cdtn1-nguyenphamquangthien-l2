@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mekong-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_secure_pwd
+      POSTGRES_DB: mekong_crm
+    volumes:
+      - ./src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./src/db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mekong_crm"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mekong-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      STORAGE_DRIVER: postgres
+      DATABASE_URL: postgres://postgres:postgres_secure_pwd@postgres:5432/mekong_crm
+      DATABASE_SSL: "false"
+      JWT_SECRET: ${JWT_SECRET:-}
+      BUSINESS_START_HOUR: 8
+      BUSINESS_END_HOUR: 17
+      BUSINESS_WORKING_DAYS: 1,2,3,4,5,6
+    ports:
+      - "8000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:

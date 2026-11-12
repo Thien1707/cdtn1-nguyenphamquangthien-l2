@@ -1,11 +1,12 @@
 const authService = require('../services/auth.service');
+const sendError = require('./error-response');
 
 exports.login = async (req, res) => {
     try {
         const result = await authService.login(req.body.username, req.body.password);
         res.json({ status: 'success', data: result });
     } catch (error) {
-        res.status(error.statusCode || 500).json({ status: 'fail', message: error.message });
+        sendError(res, error);
     }
 };
 
@@ -14,10 +15,10 @@ exports.createUser = async (req, res) => {
         const user = await authService.createUser(req.body);
         res.status(201).json({ status: 'success', data: user });
     } catch (error) {
-        res.status(error.code === '23505' ? 409 : (error.statusCode || 500)).json({
-            status: 'fail',
-            message: error.code === '23505' ? 'Tên đăng nhập đã tồn tại.' : error.message
-        });
+        if (error.code === '23505') {
+            return sendError(res, error, 409, 'Tên đăng nhập đã tồn tại.');
+        }
+        sendError(res, error);
     }
 };
 

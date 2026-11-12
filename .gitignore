@@ -7,4 +7,5 @@ target/
 coverage/
 .idea/ 
 .vscode/settings.json
-*.sql
+*.dump.sql
+*.bak.sql

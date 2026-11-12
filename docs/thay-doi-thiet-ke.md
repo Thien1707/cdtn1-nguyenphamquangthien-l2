@@ -72,3 +72,40 @@
 - Thiết kế BT1 : `docs/drawio/architecture.drawio` (thiết kế).
 - Thay đổi BT2 : Thêm `docs/architecture-thuc-te.md`, `docs/diagrams/erd-thuc-te.mmd`.
 - Kiểm chứng : Đối chiếu sơ đồ với cấu trúc thư mục `src/` thực tế.
+
+## Sau phản hồi Bài tập 2 (Buổi 14, ngày 13/11/2026)
+
+### TD-13 Tạo và đẩy git tag v0.2 lên GitHub repository
+- Phản hồi của GV : Repo chưa có tag v0.2 (báo cáo ghi có).
+- Quyết định : SỬA
+- Lý do : Đảm bảo tính nhất quán giữa báo cáo nộp và trạng thái thực tế của repository, phục vụ việc đánh giá mốc nộp BT2 của giảng viên.
+- Ảnh hưởng : Tạo tag `v0.2` trên Git (`git tag v0.2 c3a3dc3`) và đẩy lên remote GitHub (`git push origin v0.2`).
+
+### TD-14 Định dạng link GitHub dạng văn bản có thể click trực tiếp trên trang bìa
+- Phản hồi của GV : Link repo chỉ có trong ảnh trang bìa nên không click được.
+- Quyết định : SỬA
+- Lý do : Giúp giảng viên bấm trực tiếp vào liên kết repository từ file báo cáo PDF/Word mà không phải gõ lại thủ công.
+- Ảnh hưởng : Trên trang bìa báo cáo, nhúng hyperlink dạng văn bản trực tiếp (Text link: `https://github.com/Thien1707/cdtn1-nguyenphamquangthien-l2`), không dùng hình ảnh chụp lại link.
+
+## Bài tập 3 (BT3) — Kiểm thử và đóng gói prototype
+
+### TD-15 Làm kín phản hồi lỗi và ổn định Docker build trên Windows
+- Phát hiện : Một số controller trả trực tiếp `error.message` với lỗi máy chủ; Dockerfile sao chép toàn bộ repository vào image.
+- Quyết định : SỬA.
+- Lý do : Tránh lộ chi tiết lỗi nội bộ qua API và ngăn đưa `.env`/tài liệu/test không cần thiết vào build context/image.
+- Ảnh hưởng : Thêm `src/controllers/error-response.js`, kiểm thử hồi quy trong `tests/ticket-workflows.api.test.js`, `.dockerignore` để loại `.env` khỏi build context nhưng vẫn giữ bộ test trong image, entrypoint tạo JWT secret ngẫu nhiên, và chuẩn hóa line ending script trong Docker image để chạy được khi checkout trên Windows.
+- Kiểm chứng : `npm test` trên host (18 pass, 1 PostgreSQL test skip); sau khi bật Docker, cả hai container healthy và `/health` trả 200.
+
+### TD-16 Khóa bản vá cho dependency runtime
+- Phát hiện : `npm audit --omit=dev` ban đầu phát hiện lỗ hổng mức High/Moderate trong `body-parser` và `qs`.
+- Quyết định : SỬA.
+- Lý do : Không giữ dependency runtime có advisory đã biết khi có bản vá tương thích.
+- Ảnh hưởng : Thêm `overrides` trong `package.json` để dùng `body-parser` 2.4.0 và `qs` 6.17.1; lockfile cập nhật tương ứng.
+- Kiểm chứng : `npm audit --omit=dev` báo 0 vulnerabilities. Full `npm audit` còn 2 Moderate trong dependency phát triển `nodemon` → `minimatch`; không ép `npm audit fix --force` vì phương án đó hạ phiên bản nodemon ngoài range khai báo.
+
+### TD-17 Dọn status log trong PostgreSQL integration test
+- Phát hiện : Test persistence tạo status log khi ghi phiếu nhưng cleanup chỉ xóa ticket, làm foreign key từ chối lệnh dọn dữ liệu.
+- Quyết định : SỬA.
+- Lý do : Test tích hợp phải tự dọn fixture sau khi chạy để tái lập và không để lại dữ liệu rác.
+- Ảnh hưởng : `tests/postgres.integration.test.js` xóa status log thuộc ticket kiểm thử trước, rồi mới xóa ticket.
+- Kiểm chứng : Full suite trong Docker với PostgreSQL trả 19 pass, 0 fail, 0 skip.

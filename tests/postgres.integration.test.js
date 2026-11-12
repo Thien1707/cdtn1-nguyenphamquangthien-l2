@@ -46,6 +46,7 @@ test('PostgreSQL can persist customer, device, ticket, and status log', {
         assert.equal(found.ticket_code, ticket.ticket_code);
         assert.equal((await repository.findCustomerByPhone(customer.phone)).devices[0].serial_no, device.serial_no);
 
+        await pool.query('DELETE FROM ticket_status_logs WHERE ticket_id = $1', [ticket.ticket_id]);
         await pool.query('DELETE FROM tickets WHERE ticket_id = $1', [ticket.ticket_id]);
         await pool.query('DELETE FROM devices WHERE device_id = $1', [device.device_id]);
         await pool.query('DELETE FROM customers WHERE customer_id = $1', [customer.customer_id]);

@@ -1,11 +1,12 @@
 const ticketService = require('../services/ticket.service');
+const sendError = require('./error-response');
 
 exports.getTickets = async (req, res) => {
     try {
         const data = await ticketService.getAllTickets();
         res.json({ status: 'success', data });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        sendError(res, err);
     }
 };
 
@@ -19,12 +20,7 @@ exports.createTicket = async (req, res) => {
 };
 
 function handleError(res, error) {
-    res.status(error.statusCode || 500).json({
-        status: 'fail',
-        message: error.message,
-        ...(error.phone ? { phone: error.phone } : {}),
-        ...(error.action ? { next_action: error.action } : {})
-    });
+    sendError(res, error);
 }
 
 exports.searchCustomer = async (req, res) => {

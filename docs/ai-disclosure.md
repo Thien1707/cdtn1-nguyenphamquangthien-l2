@@ -1,19 +1,21 @@
-# Phụ lục Khai báo Sử dụng Công cụ AI
+# AI Tool Use Disclosure — BT3
 
-**Học phần:** Chuyên đề Tốt nghiệp 1 (HK1 2026 – 2027)  
-**Sinh viên:** Nguyễn Phạm Quang Thiện — MSSV **2374802011250**  
-**Track:** Software Engineering (SE) · Luồng **L2**
+**Course:** Graduation Capstone 1 (Term 1, 2026-2027)
+**Student:** Nguyen Pham Quang Thien — **Student ID:** 2374802011250
+**Track:** Software Engineering (SE) — **Workflow:** L2
 
-## 1. Bảng khai báo (BT1 + BT2)
+| Tool | Purpose | Files or functions affected | How the work was checked |
+|---|---|---|---|
+| Gemini / ChatGPT (BT1) | Suggested the SRS structure, diagrams, and initial SQL outline. | `docs/srs.md`, original Draw.io files. | Compared with the case study and instructor feedback recorded in `docs/thay-doi-thiet-ke.md`. |
+| Cursor AI (BT2) | Assisted with CRUD, the API client, tests, and technical-document drafts. | Service/controller/repository files, `src/public/api/client.js`, BT2 documentation. | Ran the BT2 test suite at the time and manually reviewed changes. |
+| Copilot AI assistant in VS Code (BT3) | Reviewed the supplied BT3 assignment against the repository; helped identify inaccurate claims, update deployment/security/test documentation, add server-error response sanitization and a regression test, pin safe runtime dependencies, fix the PostgreSQL test cleanup, and draft this report. | `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `package.json`, `package-lock.json`, `scripts/docker-entrypoint.sh`, `src/controllers/error-response.js`, controller files, `tests/*`, `docs/*`, and `scripts/build_bt3_report_docx.py`. | Ran the container suite with PostgreSQL (19 pass, 0 fail, 0 skipped), ran `npm run db:init` twice and checked seed counts, confirmed healthy containers and HTTP health response, `npm audit --omit=dev` (0 vulnerabilities), and full `npm audit` (2 moderate dev-dependency findings). |
 
-| Công cụ AI | Dùng vào việc gì | Áp dụng ở tệp / phần nào | Em kiểm chứng mã AI thế nào |
-|------------|------------------|---------------------------|------------------------------|
-| Gemini / ChatGPT (BT1) | Gợi ý cấu trúc SRS, Mermaid, khung SQL DDL | `docs/srs.md`, drawio | Đối chiếu case study Mekong Mobile, rà 3NF, GV feedback TD-01–06 |
-| Cursor AI (BT2) | CRUD customer/device, API client, test, tài liệu BT2 | `src/services/ticket.service.js`, `src/public/api/client.js`, `tests/crud.api.test.js`, `docs/architecture-thuc-te.md` | Chạy `npm test` (17 pass); review diff; chạy thử UI/API trên memory mode |
-| Cursor AI (BT2) | Checklist ảnh, rubric, README | `docs/screenshot-checklist.md`, `README.md` | Sinh viên tự clone README và chụp ảnh S01–S12 theo checklist |
+## Student responsibility
 
-## 2. Cam kết
+AI assistance does not replace the student's understanding or verification. Review every submitted test and document, rerun the documented checks, and correct this disclosure if any tool or validation detail is inaccurate.
 
-Tôi chịu trách nhiệm về toàn bộ nội dung nộp. Mọi đoạn do AI gợi ý đều được đọc lại, chỉnh và kiểm thử trước khi commit.
+## Commitment
 
-**Ngày cập nhật BT2:** 29/10/2026
+I am responsible for the submitted work. AI-generated suggestions were reviewed and changed as needed; claims that could not be independently verified are explicitly marked as pending or unverified.
+
+**BT3 disclosure date:** 13 November 2026

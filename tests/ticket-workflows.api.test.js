@@ -4,6 +4,7 @@ process.env.STORAGE_DRIVER = 'memory';
 process.env.JWT_SECRET = 'test-only-secret-that-is-at-least-32-characters';
 const app = require('../src/app');
 const ticketRepository = require('../src/repositories/ticket.repository');
+const ticketService = require('../src/services/ticket.service');
 
 let server;
 let baseUrl;
@@ -47,6 +48,24 @@ async function request(path, options) {
     });
     return { status: response.status, body: await response.json() };
 }
+
+test('server errors do not expose internal error details', async () => {
+    const originalGetAllTickets = ticketService.getAllTickets;
+    ticketService.getAllTickets = async () => {
+        throw new Error('Internal database detail: password=fixture-value');
+    };
+
+    try {
+        const response = await request('/tickets');
+        assert.equal(response.status, 500);
+        assert.deepEqual(response.body, {
+            status: 'fail',
+            message: 'Đã xảy ra lỗi nội bộ.'
+        });
+    } finally {
+        ticketService.getAllTickets = originalGetAllTickets;
+    }
+});
 
 test('authentication enforces login and role permissions', async () => {
     const anonymous = await request('/tickets', { token: null });

@@ -35,6 +35,10 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.1"
   },
+  "overrides": {
+    "body-parser": "2.4.0",
+    "qs": "6.17.1"
+  },
   "devDependencies": {
     "nodemon": "^3.1.14"
   }
